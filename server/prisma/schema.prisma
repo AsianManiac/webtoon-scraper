@@ -1,0 +1,164 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Webtoon {
+  id                Int                @id @default(autoincrement())
+  url               String             @unique
+  title             String
+  author            String
+  genre             String
+  rating            String
+  description       String
+  thumbnailUrl      String
+  heroImage         String?
+  coverImage        String?
+  status            WebtoonStatus
+  releaseDays       String[]
+  views             String
+  subscribers       String
+  episodes          Episode[]
+  downloads         Download[]
+  suggestedWebtoons SuggestedWebtoon[]
+  authorDetail      AuthorDetail?
+  tracking          Tracking?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Episode {
+  id           Int    @id @default(autoincrement())
+  number       String
+  title        String
+  uploadDate   String
+  thumbnailUrl String
+  url          String
+  likes        String
+
+  webtoon   Webtoon @relation(fields: [webtoonId], references: [id])
+  webtoonId Int
+}
+
+model SuggestedWebtoon {
+  id           Int    @id @default(autoincrement())
+  title        String
+  url          String
+  thumbnailUrl String
+  author       String
+  views        String
+
+  webtoon   Webtoon @relation(fields: [webtoonId], references: [id])
+  webtoonId Int
+}
+
+model AuthorDetail {
+  id            Int    @id @default(autoincrement())
+  authorProfile String
+  auth          String
+  desc          String
+  writer        String
+  andesc        String
+  anwriter      String
+
+  webtoon   Webtoon @relation(fields: [webtoonId], references: [id])
+  webtoonId Int     @unique
+}
+
+model Tracking {
+  id             Int      @id @default(autoincrement())
+  url            String?  @unique
+  lastEpisode    String
+  lastUpdateDate DateTime
+  isCompleted    Boolean
+
+  webtoon   Webtoon @relation(fields: [webtoonId], references: [id])
+  webtoonId Int     @unique
+}
+
+model Download {
+  id               Int                 @id @default(autoincrement())
+  downloadId       String              @unique
+  webtoonId        Int
+  status           DownloadStatus
+  downloadChapters DownloadedChapter[]
+  currentChapter   Int?
+  totalChapters    Int?
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  webtoon          Webtoon?            @relation(fields: [webtoonId], references: [id])
+}
+
+model DownloadedChapter {
+  id               Int            @id @default(autoincrement())
+  downloadId       String
+  download         Download       @relation(fields: [downloadId], references: [downloadId])
+  chapterNumber    Int
+  chapterImage     String?
+  totalImages      Int
+  downloadedImages Int
+  sourcePath       String
+  status           DownloadStatus
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@unique([downloadId, chapterNumber])
+}
+
+enum DownloadStatus {
+  PENDING
+  IN_PROGRESS
+  PAUSED
+  COMPLETED
+  ERROR
+}
+
+enum WebtoonStatus {
+  ONGOING
+  COMPLETED
+  HIATUS
+}
+
+model Queue {
+  id        String   @id @default(uuid())
+  type      String
+  payload   Json
+  status    QueueStatus
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Email {
+  id        String   @id @default(uuid())
+  to        String
+  subject   String
+  content   String
+  status    EmailStatus
+  retries   Int      @default(0)
+  lastError String?
+  sentAt    DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum QueueStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum EmailStatus {
+  QUEUED
+  PROCESSING
+  SENT
+  FAILED
+}
