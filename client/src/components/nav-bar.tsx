@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
-import { AlertCircle, CheckCircle, Download, Loader } from "lucide-react";
+import { AlertCircle, CheckCircle, Home, Loader } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
-  { path: "/", label: "Home", icon: Download },
-  { path: "/completed", label: "Completed", icon: CheckCircle },
-  { path: "/in-progress", label: "In Progress", icon: Loader },
-  { path: "/failed", label: "Failed", icon: AlertCircle },
+  { path: "/", label: "Home", icon: Home },
+  // { path: "/downloads", label: "Downloads", icon: Download },
+  { path: "/downloads/completed", label: "Completed", icon: CheckCircle },
+  { path: "/downloads/in-progress", label: "In Progress", icon: Loader },
+  { path: "/downloads/failed", label: "Failed", icon: AlertCircle },
 ];
 
 const Navbar = () => {

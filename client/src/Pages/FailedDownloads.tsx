@@ -1,3 +1,4 @@
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { ToonCardSkeleton } from "@/components/toon-card-skeleton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -67,56 +68,58 @@ const FailedDownloads = () => {
       transition={{ duration: 0.3 }}
       className="space-y-6"
     >
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-        Failed Downloads
-      </h1>
-      {error && <p className="text-rose-500">{error}</p>}
-      <ScrollArea className="h-[calc(100vh-12rem)]">
-        <div className="space-y-4">
-          {loading
-            ? Array.from({ length: 5 }).map((_, index) => (
-                <ToonCardSkeleton key={index} />
-              ))
-            : failedDownloads.map((download) => (
-                <motion.div
-                  key={download.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Card>
-                    <CardContent className="p-4">
-                      <div className="flex items-center space-x-4">
-                        <img
-                          // src={download.webtoon.thumbnailUrl || "/placeholder.svg"}
-                          src={"/placeholder.svg"}
-                          alt={download.webtoon.title}
-                          className="w-16 h-16 object-cover rounded-md"
-                        />
-                        <div className="flex-1">
-                          <h3 className="text-lg font-semibold">
-                            {download.webtoon.title}
-                          </h3>
-                          <p className="text-sm text-red-500">
-                            {download.error}
-                          </p>
-                          <div className="mt-2">
-                            <Button
-                              size={"sm"}
-                              onClick={() => handleRetry(download.id)}
-                            >
-                              Retry Download
-                            </Button>
+      <MaxWidthWrapper>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
+          Failed Downloads
+        </h1>
+        {error && <p className="text-rose-500">{error}</p>}
+        <ScrollArea className="h-[calc(100vh-12rem)]">
+          <div className="space-y-4">
+            {loading
+              ? Array.from({ length: 5 }).map((_, index) => (
+                  <ToonCardSkeleton key={index} />
+                ))
+              : failedDownloads.map((download) => (
+                  <motion.div
+                    key={download.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="flex items-center space-x-4">
+                          <img
+                            // src={download.webtoon.thumbnailUrl || "/placeholder.svg"}
+                            src={"/placeholder.svg"}
+                            alt={download.webtoon.title}
+                            className="w-16 h-16 object-cover rounded-md"
+                          />
+                          <div className="flex-1">
+                            <h3 className="text-lg font-semibold">
+                              {download.webtoon.title}
+                            </h3>
+                            <p className="text-sm text-red-500">
+                              {download.error}
+                            </p>
+                            <div className="mt-2">
+                              <Button
+                                size={"sm"}
+                                onClick={() => handleRetry(download.id)}
+                              >
+                                Retry Download
+                              </Button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-        </div>
-      </ScrollArea>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+          </div>
+        </ScrollArea>
+      </MaxWidthWrapper>
     </motion.div>
   );
 };

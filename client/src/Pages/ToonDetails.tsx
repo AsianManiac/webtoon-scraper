@@ -1,3 +1,4 @@
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -143,102 +144,107 @@ const ToonDetails = () => {
       transition={{ duration: 0.3 }}
       className="space-y-6"
     >
-      <div className="flex items-start space-x-6">
-        <img
-          //   src={toon.thumbnailUrl || "/placeholder.svg"}
-          src={"/placeholder.svg"}
-          alt={toon.title}
-          className="w-48 h-auto object-cover rounded-lg shadow-lg"
-        />
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            {toon.title}
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">
-            {toon.description}
-          </p>
-          <div className="mt-4 space-y-2">
-            <p>
-              <strong>Author:</strong>{" "}
-              {toon.author.replace("author info", "").replace("...", "").trim()}
+      <MaxWidthWrapper>
+        <div className="flex items-start space-x-6">
+          <img
+            //   src={toon.thumbnailUrl || "/placeholder.svg"}
+            src={"/placeholder.svg"}
+            alt={toon.title}
+            className="w-48 h-auto object-cover rounded-lg shadow-lg"
+          />
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              {toon.title}
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">
+              {toon.description}
             </p>
-            <p>
-              <strong>Genre:</strong> {toon.genre}
-            </p>
-            <div>
-              <strong>Status:</strong>{" "}
-              <Badge
-                className={`px-2 py-1 rounded-full text-xs ${
-                  toon.status === "COMPLETED"
-                    ? "bg-green-500 text-white"
-                    : toon.status === "IN_PROGRESS"
-                    ? "bg-blue-500 text-white"
-                    : toon.status === "ERROR"
-                    ? "bg-red-500 text-white"
-                    : "bg-gray-500 text-white"
-                }`}
-              >
-                {toon.status}
-              </Badge>
+            <div className="mt-4 space-y-2">
+              <p>
+                <strong>Author:</strong>{" "}
+                {toon.author
+                  .replace("author info", "")
+                  .replace("...", "")
+                  .trim()}
+              </p>
+              <p>
+                <strong>Genre:</strong> {toon.genre}
+              </p>
+              <div>
+                <strong>Status:</strong>{" "}
+                <Badge
+                  className={`px-2 py-1 rounded-full text-xs ${
+                    toon.status === "COMPLETED"
+                      ? "bg-green-500 text-white"
+                      : toon.status === "IN_PROGRESS"
+                      ? "bg-blue-500 text-white"
+                      : toon.status === "ERROR"
+                      ? "bg-red-500 text-white"
+                      : "bg-gray-500 text-white"
+                  }`}
+                >
+                  {toon.status}
+                </Badge>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mt-8">
-        Chapters
-      </h2>
-      <ScrollArea className="h-[calc(100vh-24rem)]">
-        <div className="space-y-4">
-          {chapters.map((chapter) => (
-            <motion.div
-              key={chapter.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Link to={`/toon/${id}/chapter/${chapter.id}`}>
-                <Card>
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-semibold">
-                        Chapter {chapter.chapterNumber}
-                      </h3>
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs ${
-                          chapter.status === "COMPLETED"
-                            ? "bg-green-500 text-white"
-                            : chapter.status === "IN_PROGRESS"
-                            ? "bg-blue-500 text-white"
-                            : chapter.status === "ERROR"
-                            ? "bg-red-500 text-white"
-                            : "bg-gray-500 text-white"
-                        }`}
-                      >
-                        {chapter.status}
-                      </span>
-                    </div>
-                    {chapter.status === "IN_PROGRESS" && (
-                      <div className="mt-2">
-                        <progress
-                          value={chapter.downloadedImages}
-                          max={chapter.totalImages}
-                          className="w-full"
-                        />
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                          {chapter.downloadedImages} / {chapter.totalImages}{" "}
-                          images
-                        </p>
+        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-3">
+          Chapters
+        </h2>
+        <ScrollArea className="h-[calc(100vh-24rem)]">
+          <div className="space-y-4">
+            {chapters.map((chapter) => (
+              <motion.div
+                key={chapter.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Link to={`/toon/${id}/chapter/${chapter.id}`}>
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-lg font-semibold">
+                          Chapter {chapter.chapterNumber}
+                        </h3>
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs ${
+                            chapter.status === "COMPLETED"
+                              ? "bg-green-500 text-white"
+                              : chapter.status === "IN_PROGRESS"
+                              ? "bg-blue-500 text-white"
+                              : chapter.status === "ERROR"
+                              ? "bg-red-500 text-white"
+                              : "bg-gray-500 text-white"
+                          }`}
+                        >
+                          {chapter.status}
+                        </span>
                       </div>
-                    )}
-                  </CardContent>
-                </Card>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </ScrollArea>
+                      {chapter.status === "IN_PROGRESS" && (
+                        <div className="mt-2">
+                          <progress
+                            value={chapter.downloadedImages}
+                            max={chapter.totalImages}
+                            className="w-full"
+                          />
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                            {chapter.downloadedImages} / {chapter.totalImages}{" "}
+                            images
+                          </p>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </ScrollArea>
+      </MaxWidthWrapper>
     </motion.div>
   );
 };

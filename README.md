@@ -1,5 +1,12 @@
 # 🚀 Webtoon Downloader Pro
 
+Welcome to the Webtoon Downloader, a powerful application that allows you to download and manage your favorite webtoons with ease! 📚🎨
+
+[![GitHub license](https://img.shields.io/github/license/your-username/webtoon-downloader.svg)](https://github.com/your-username/webtoon-downloader/blob/master/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/your-username/webtoon-downloader.svg)](https://github.com/your-username/webtoon-downloader/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/your-username/webtoon-downloader.svg)](https://github.com/your-username/webtoon-downloader/issues)
+[![GitHub forks](https://img.shields.io/github/forks/your-username/webtoon-downloader.svg)](https://github.com/your-username/webtoon-downloader/network)
+
 <div style="display: flex; flex-direction: 'row'; flex-wrap: wrap; gap: 0.3rem;">
     <img src="./server/screenshots/Screenshot%202025-01-24%20at%2017-24-56%20Vite%20React%20TS.png" width=48%>
     <img src="./server/screenshots/Screenshot%202025-01-24%20at%2017-25-07%20Vite%20React%20TS.png" width=48%>
@@ -9,13 +16,6 @@
     <img src="./server/screenshots/Screenshot%202025-01-24%20at%2017-26-16%20Vite%20React%20TS.png" width=48%>
     <img src="./server/screenshots/Screenshot%202025-01-24%20172728.png" width=48%>
 </div>
-
-Welcome to the Webtoon Downloader, a powerful application that allows you to download and manage your favorite webtoons with ease! 📚🎨
-
-[![GitHub license](https://img.shields.io/github/license/your-username/webtoon-downloader.svg)](https://github.com/your-username/webtoon-downloader/blob/master/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/your-username/webtoon-downloader.svg)](https://github.com/your-username/webtoon-downloader/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/your-username/webtoon-downloader.svg)](https://github.com/your-username/webtoon-downloader/issues)
-[![GitHub forks](https://img.shields.io/github/forks/your-username/webtoon-downloader.svg)](https://github.com/your-username/webtoon-downloader/network)
 
 ## 📚 Table of Contents
 
@@ -194,25 +194,37 @@ Replace the placeholder values with your actual configuration.
 
 ## 🏃‍♂️ Running the Application
 
-    ### Server
+### Server
 
-    1. Navigate to the server directory:
+1. Navigate to the server directory:
 
-        ```shellscript
-        cd server
-        ```
+   ```shellscript
+   cd server
+   ```
 
-    2. Run database migrations:
+2. Generate prisma interfaces:
 
-        ```shellscript
-        bun run prisma migrate dev
-        ```
+   ```shellscript
+   npx prisma generate
+   ```
 
-    3. Start the server:
+3. Run database migrations:
 
-        ```shellscript
-        bun run dev
-        ```
+   ```shellscript
+   npx prisma migrate dev
+   ```
+
+4. Push migrations to database:
+
+   ```shellscript
+   npx prisma db push
+   ```
+
+5. Start the server:
+
+   ```shellscript
+   bun run dev
+   ```
 
 The server will start on `http://localhost:8001` (or the port specified in your `.env` file).
 
@@ -227,7 +239,7 @@ The server will start on `http://localhost:8001` (or the port specified in your 
 2.  Start the development server:
 
     ```shellscript
-    bun run dev
+    npm run dev
     ```
 
 The client will be available at `http://localhost:5173`.
@@ -248,10 +260,10 @@ Here are the main scripts you can run:
 }
 ```
 
-- `bun run dev`: Start the server in development mode with hot reloading.
+- `bun dev`: Start the server in development mode with hot reloading.
 - `bun run start`: Start the server in production mode.
-- `bun run seed`: Seed the database with initial data.
 - `bun run scrape`: Run the webtoon scraper manually.
+- `bun run seed`: Seed the database with initial data.
 - `bun run build`: Build the server for production.
 
 ## 📊 Database Schema
@@ -293,17 +305,6 @@ Our React client offers a user-friendly interface with the following main featur
 ## 🚀 Deployment
 
 For deployment instructions, please refer to our [Deployment Guide](./DEPLOYMENT.md).
-
-## 🧪 Testing
-
-To run the test suite:
-
-1. Run server tests
-
-   ```
-   cd server
-   bun test
-   ```
 
 ## 🤝 Contributing
 

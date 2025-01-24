@@ -1,3 +1,4 @@
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -113,6 +114,7 @@ const ChapterView = () => {
 
   const handleNextChapter = useCallback(() => {
     if (currentChapterIndex < allChapters.length - 1) {
+      window.scrollTo(0, 0);
       navigateToChapter(allChapters[currentChapterIndex + 1].id);
     }
   }, [currentChapterIndex, allChapters, navigateToChapter]);
@@ -196,19 +198,20 @@ const ChapterView = () => {
       transition={{ duration: 0.3 }}
       className="space-y-6"
     >
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-          {chapter.webtoonTitle} - Chapter {chapter.chapterNumber}
-        </h1>
-        <Link to={`/toon/${id}`}>
-          <Button variant="outline" className="items-center">
-            <ArrowLeft className="size-4" />
-            Back to Toon
-          </Button>
-        </Link>
-      </div>
-
-      <ChapterNavigation />
+      <MaxWidthWrapper>
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            {chapter.webtoonTitle} - Chapter {chapter.chapterNumber}
+          </h1>
+          <Link to={`/toon/${id}`}>
+            <Button variant="outline" className="items-center">
+              <ArrowLeft className="size-4" />
+              Back to Toon
+            </Button>
+          </Link>
+        </div>
+        <ChapterNavigation />
+      </MaxWidthWrapper>
 
       <ScrollArea className="h-[calc(100vh-8rem)]" ref={scrollRef}>
         <motion.div
@@ -232,13 +235,15 @@ const ChapterView = () => {
         </motion.div>
       </ScrollArea>
 
-      <ChapterNavigation />
+      <MaxWidthWrapper>
+        <ChapterNavigation />
 
-      {isAtBottom && currentChapterIndex < allChapters.length - 1 && (
-        <div className="text-center text-gray-500 dark:text-gray-400 animate-bounce">
-          Pull up to load next chapter
-        </div>
-      )}
+        {isAtBottom && currentChapterIndex < allChapters.length - 1 && (
+          <div className="text-center text-gray-500 dark:text-gray-400 animate-bounce">
+            Pull up to load next chapter
+          </div>
+        )}
+      </MaxWidthWrapper>
     </motion.div>
   );
 };
