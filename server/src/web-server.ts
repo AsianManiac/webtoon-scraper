@@ -171,7 +171,10 @@ async function processDownload(downloadId: string, options: DownloadRequest) {
     const viewerUrl = await getChapterViewerUrl(html);
     const seriesTitle = await getSeriesTitle(html);
     const slugifiedTitle = slugifyTitle(seriesTitle);
-    const seriesFolder = path.join(options.dest || "downloads", slugifiedTitle);
+    const seriesFolder = path.join(
+      options.dest || config.DOWNLOAD_FOLDER_NAME,
+      slugifiedTitle
+    );
     await ensureFolder(seriesFolder);
 
     const chapters = await getChaptersDetails(
@@ -315,7 +318,7 @@ wsInstance.app.ws("/ws", (ws, req) => {
   const clientId = uuidv4();
   clients.set(clientId, ws);
 
-  ws.on("message", async (msg) => {
+  ws.on("message", async (msg: { toString: () => string }) => {
     try {
       const data = JSON.parse(msg.toString());
       if (data.action === "start_download") {

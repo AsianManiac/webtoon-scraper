@@ -1,0 +1,41 @@
+erDiagram
+    Webtoon ||--o{ Chapter : has
+    Webtoon {
+        int id
+        string title
+        string author
+        string description
+        string coverImage
+        string status
+        datetime lastUpdated
+    }
+    Chapter ||--o{ Image : contains
+    Chapter {
+        int id
+        int webtoonId
+        int chapterNumber
+        string title
+        datetime releaseDate
+        string status
+    }
+    Image {
+        int id
+        int chapterId
+        string url
+        int orderIndex
+    }
+    Download ||--o{ Webtoon : downloads
+    Download {
+        int id
+        int webtoonId
+        string status
+        datetime startedAt
+        datetime completedAt
+    }
+    User ||--o{ Download : initiates
+    User {
+        int id
+        string username
+        string email
+        string passwordHash
+    }
